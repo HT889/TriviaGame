@@ -6,16 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Trivia Game</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 </head>
 
 <body>
-    You have <span id="timer">60</span> seconds to finish this quiz! Are you ready? Click start!<br>
-    <button id="start">Start</button>
+
+    <div class="container-flex rounded bg-dark text-light w-auto mx-auto text-center">
+            🏁🏁    🚗 You think you got what it takes? 🚙 💨
+    </div>
+    <br>
+    <div id="poppadiv" class="container rounded bg-light border border-warning p-5">
+    You have <span id="timer">30</span> seconds to finish this quiz! Are you ready? Click start, motorheads!<br>
+    <button type="button" class="btn btn-warning btn-lg" id="start">Start</button>
     <div id="quiz-area">
     </div>
-    <button id="finish">Finished</button>
+    <button type="button" class="btn btn-warning btn-lg" id="finish">Finished</button>
+</div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="./assets/javascript/app.js"></script>

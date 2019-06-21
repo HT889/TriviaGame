@@ -10,22 +10,38 @@ var questions = [
         correctAnswer: 'Clutch'
     },
     {
-        question: 'Some cars have a third pedal to the left of the brake pedal. What is this pedal called?',
-        answers: ['Flush', 'Stopper', 'Clutch', 'Picker'],
-        correctAnswer: 'Clutch'
+        question: 'A driving technique where the driver intentionally oversteers, with loss of traction in the rear wheels or all tires, while maintaining control and driving the car through the entirety of a corner is called...',
+        answers: ['Running', 'Speeding', 'Drifting', 'Riding the Apex'],
+        correctAnswer: 'Drifting'
     },
+    {
+        question: 'What was the first car launched into space?',
+        answers: ['Ford Mustang', 'Tesla Roadster', 'Rinspeed Oasis', 'Porsche 911'],
+        correctAnswer: 'Tesla Roadster'
+    },
+    // {
+    //     question: 'How cool is this quiz?',
+    //     answers: [`It's aiiight`, `Great, a true work of art`, `Don't worry, I won't be upset`, `This is the answer, thanks for playing`],
+    //     correctAnswer: `This is the answer, thanks for playing`
+    // }
 ]
 
 var rightAnswers = 0;
-var wrongAnswers = 0;
+// var wrongAnswers = 0;
 var timer;
-var counter = 60;
+var counter = 30;
+var rollSound = new Audio("/Users/haigtalarian/Desktop/Code/repositories/TriviaGame/assets/audiofiles/StartCar.mp3");
+var rollSound2 = new Audio("/Users/haigtalarian/Desktop/Code/repositories/TriviaGame/assets/audiofiles/Corvette+pass.mp3");
+var yay = new Audio("/Users/haigtalarian/Desktop/Code/repositories/TriviaGame/assets/audiofiles/1_person_cheering-Jett_Rifkin-1851518140.mp3");
+
+$('#start').click(e => rollSound2.play());
+
 
 var addQuestions = function () {  //function to generate questions based on the array above
     for (let i = 0; i < questions.length; i++) {
-        $("#quiz-area").append("<h3>" + questions[i].question + "</h3>");
+        $("#quiz-area").append("<h4>" + questions[i].question + "</h4>");
         for (let j = 0; j < questions[i].answers.length; j++) {
-            $("#quiz-area").append(`<input class='question' type="radio" name="question-${i}" value="${questions[i].answers[j]}">` + questions[i].answers[j]);
+            $("#quiz-area").append(`<input class='question' type="radio" name="question-${i}" value="${questions[i].answers[j]}">` + `<span class="answer">` + questions[i].answers[j]) + `</span>`;
 
         }
 
@@ -33,11 +49,11 @@ var addQuestions = function () {  //function to generate questions based on the 
 }
 
 function checkAnswers() {  // function checks how many wrong and right answers are picked
+    yay.play();
     var answerCheck = $(`#quiz-area`).children(`input:checked`);
-    var answerNotChecked = $('input[type="radio"]:not(:checked)');
-    if ((answerNotChecked.length % 4) == 1) {
-        console.log(answerNotChecked);        
-    }
+    // if ((answerNotChecked.length % 4) == 1) {
+    //     console.log(answerNotChecked);        
+    // }
     // console.log(answerNotChecked.length % 4);
 
     // console.log(answerCheck);
@@ -47,19 +63,26 @@ function checkAnswers() {  // function checks how many wrong and right answers a
         if (currentValue === questions[i].correctAnswer) {
             rightAnswers+=1;
             }
-        else {
-            wrongAnswers+=1;
-        }
-        
+        // else if (currentValue != questions[i].correctAnswer) {
+        //     wrongAnswers+=1;
+        // }
+        // else {
+        //     wrongAnswers+=1;
+        // }
+ 
     }
-    alert(`Correct: ` + rightAnswers + `\n` + `Incorrect: ` + wrongAnswers);
+    
+    alert(`You got ` + rightAnswers + ` out of ` + questions.length + ` questions correct!` + `\n` + `\n` + `Refresh the page if you want to try again.`);
+
 }
+
 
 function startTimer() {
     
     timer=setInterval(function(){
         if (counter <= 1) {
-            clearInterval(timer)
+            clearInterval(timer);
+            $(`#finish`).attr(`disabled`, true);
             checkAnswers();
         }
         counter--;
@@ -69,15 +92,19 @@ function startTimer() {
 }
 
 $(document).ready(function () {
+    // console.log(questions[4].correctAnswer);
+    // console.log(questions[4].answers[3]);
     
-    
+    $(`#finish`).hide();
     $(`#start`).on('click', function(){
         startTimer();
         addQuestions();
+        $(`#finish`).show();
         $(`#start`).attr(`disabled`, true);
     });
     
     $('#finish').on('click', function (event) {
+        yay.play();
         checkAnswers();
         clearInterval(timer);
         $(`#finish`).attr(`disabled`, true);
