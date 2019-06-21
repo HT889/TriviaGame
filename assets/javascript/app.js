@@ -30,9 +30,8 @@ var rightAnswers = 0;
 // var wrongAnswers = 0;
 var timer;
 var counter = 30;
-var rollSound = new Audio("/Users/haigtalarian/Desktop/Code/repositories/TriviaGame/assets/audiofiles/StartCar.mp3");
-var rollSound2 = new Audio("/Users/haigtalarian/Desktop/Code/repositories/TriviaGame/assets/audiofiles/Corvette+pass.mp3");
-var yay = new Audio("/Users/haigtalarian/Desktop/Code/repositories/TriviaGame/assets/audiofiles/1_person_cheering-Jett_Rifkin-1851518140.mp3");
+var rollSound2 = new Audio("./assets/audiofiles/Corvette+pass.mp3");
+var yay = new Audio("./assets/audiofiles/1_person_cheering-Jett_Rifkin-1851518140.mp3");
 
 $('#start').click(e => rollSound2.play());
 
