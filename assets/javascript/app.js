@@ -50,6 +50,8 @@ var addQuestions = function () {  //function to generate questions based on the 
 function checkAnswers() {  // function checks how many wrong and right answers are picked
     yay.play();
     var answerCheck = $(`#quiz-area`).children(`input:checked`);
+
+    console.log(answerCheck);
     // if ((answerNotChecked.length % 4) == 1) {
     //     console.log(answerNotChecked);        
     // }
@@ -60,7 +62,7 @@ function checkAnswers() {  // function checks how many wrong and right answers a
         var currentValue = answerCheck[i].value;
         // console.log(currentValue);
         if (currentValue === questions[i].correctAnswer) {
-            rightAnswers+=1;
+            rightAnswers++;
             }
         // else if (currentValue != questions[i].correctAnswer) {
         //     wrongAnswers+=1;
