@@ -27,14 +27,12 @@ var questions = [
 ]
 
 var rightAnswers = 0;
-// var wrongAnswers = 0;
 var timer;
-var counter = 20;
+var counter = 5;
 var rollSound2 = new Audio("./assets/audiofiles/Corvette+pass.mp3");
 var yay = new Audio("./assets/audiofiles/1_person_cheering-Jett_Rifkin-1851518140.mp3");
 
 $('#start').click(e => rollSound2.play());
-
 
 var addQuestions = function () {  //function to generate questions based on the array above
     let quizArea = $('#quiz-area');
@@ -49,92 +47,110 @@ var addQuestions = function () {  //function to generate questions based on the 
         quizArea.append(question)
     }
 
-}
+};
+
 function updateScore(array) {
 
-    // console.log('ARRAY', array);
-
-    for (let i = 0; i < array.length; i++ ) {
-        // console.log(array[i].value, questions[i].correctAnswer);
-        if ( array[i].value === questions[i].correctAnswer ) {
+    array.forEach( (answer,i) => {
+        if (answer.value === questions[i].correctAnswer) {
             rightAnswers++
-        } 
-    }
-    // console.log("Final Score:", rightAnswers);
+        }
+    })
+
+    /* PREVIOUS ====================================================
+        for (let i = 0; i < array.length; i++ ) {
+            if ( array[i].value === questions[i].correctAnswer ) {
+                rightAnswers++
+            } 
+        }
+    ============================================================= */
+
 }
 
 function checkAnswers() {  // function checks how many wrong and right answers are picked
     yay.play();
-    // var answerCheck = $(`#quiz-area`).children(`input:checked`);
     let answer = {};
     let checkAnswers = [];
-  
-    var answerCheck1 = $(`#question-div-0`).children(`input:checked`); 
-    var answerCheck2 = $(`#question-div-1`).children(`input:checked`);
-    var answerCheck3 = $(`#question-div-2`).children(`input:checked`);
-    var answerCheck4 = $(`#question-div-3`).children(`input:checked`);
 
-    if ( answerCheck1.length === 1 ) {
-        answer.value = answerCheck1[0].value;
-        checkAnswers.push(answer);
-        answer = {};
-        // console.log(checkAnswers);
-    } else {
-        answer.value = 0;
-        checkAnswers.push(answer);
-        answer = {};
-        // console.log(checkAnswers);
+    for (let i = 0; i < questions.length; i++) {
+       let answerCheck = $(`#question-div-${i}`).children(`input:checked`);
+
+       if ( answerCheck.length === 1 ) { // if an answer was selected, i.e. length of 1
+            answer.value = answerCheck[0].value; // put 'value: <selected answer>' in an object
+            checkAnswers.push(answer); // push that object to checkAnswers array
+            answer = {}; // reset object
+        } else {
+            answer.value = 0; // if answer was not selected, put 'value: 0' in object
+            checkAnswers.push(answer); // push object to checkAnswers array
+            answer = {}; // reset object
+        }
     }
 
-    if ( answerCheck2.length === 1 ) {
-        answer.value = answerCheck2[0].value;
-        checkAnswers.push(answer);
-        answer = {};
-        // console.log(checkAnswers);
-    } else {
-        answer.value = 0;
-        checkAnswers.push(answer);
-        answer = {};
-        // console.log(checkAnswers);
-    }
+    updateScore(checkAnswers); // pass array into updateScore function
 
-    if ( answerCheck3.length === 1 ) {
-        answer.value = answerCheck3[0].value;
-        checkAnswers.push(answer);
-        answer = {};
-        // console.log(checkAnswers);
-    } else {
-        answer.value = 0;
-        checkAnswers.push(answer);
-        answer = {};
-        // console.log(checkAnswers);
-    }
+    /* PREVIOUS ====================================================
+        var answerCheck1 = $(`#question-div-0`).children(`input:checked`); 
+        var answerCheck2 = $(`#question-div-1`).children(`input:checked`);
+        var answerCheck3 = $(`#question-div-2`).children(`input:checked`);
+        var answerCheck4 = $(`#question-div-3`).children(`input:checked`);
 
-    if ( answerCheck4.length === 1 ) {
-        answer.value = answerCheck4[0].value;
-        checkAnswers.push(answer);
-        answer = {};
-        // console.log(checkAnswers);
-    } else {
-        answer.value = 0;
-        checkAnswers.push(answer);
-        answer = {};
-        // console.log(checkAnswers);
-    }
+        if ( answerCheck1.length === 1 ) {
+            answer.value = answerCheck1[0].value;
+            checkAnswers.push(answer);
+            answer = {};
+            // console.log(checkAnswers);
+        } else {
+            answer.value = 0;
+            checkAnswers.push(answer);
+            answer = {};
+            // console.log(checkAnswers);
+        }
 
-    // console.log('checkAnswers Array', checkAnswers);
-    updateScore(checkAnswers);
+        if ( answerCheck2.length === 1 ) {
+            answer.value = answerCheck2[0].value;
+            checkAnswers.push(answer);
+            answer = {};
+            // console.log(checkAnswers);
+        } else {
+            answer.value = 0;
+            checkAnswers.push(answer);
+            answer = {};
+            // console.log(checkAnswers);
+        }
 
-    // console.log('AFTER FUNCTIONS RUN', rightAnswers)
+        if ( answerCheck3.length === 1 ) {
+            answer.value = answerCheck3[0].value;
+            checkAnswers.push(answer);
+            answer = {};
+            // console.log(checkAnswers);
+        } else {
+            answer.value = 0;
+            checkAnswers.push(answer);
+            answer = {};
+            // console.log(checkAnswers);
+        }
 
-    alert(`You got ` + rightAnswers + ` out of ` + questions.length + ` questions correct!` + `\n` + `\n` + `Refresh the page if you want to try again.`);
+        if ( answerCheck4.length === 1 ) {
+            answer.value = answerCheck4[0].value;
+            checkAnswers.push(answer);
+            answer = {};
+            // console.log(checkAnswers);
+        } else {
+            answer.value = 0;
+            checkAnswers.push(answer);
+            answer = {};
+            // console.log(checkAnswers);
+        }
 
+        updateScore(checkAnswers);
+        alert(`You got ` + rightAnswers + ` out of ` + questions.length + ` questions correct!` + `\n` + `\n` + `Refresh the page if you want to try again.`); // display score to user
+
+    ============================================================= */
 }
-
 
 function startTimer() {
     
-    timer=setInterval(function(){
+    timer = setInterval(function(){
         if (counter <= 1) {
             clearInterval(timer);
             $(`#finish`).attr(`disabled`, true);
@@ -142,14 +158,11 @@ function startTimer() {
         }
         counter--;
         $(`#timer`).text(counter);
-    },1000)
+    }, 1000)
     
 }
 
-$(document).ready(function () {
-    // console.log(questions[4].correctAnswer);
-    // console.log(questions[4].answers[3]);
-    
+$(document).ready(function () {   
     $(`#finish`).hide();
     $(`#start`).on('click', function(){
         startTimer();
@@ -162,40 +175,8 @@ $(document).ready(function () {
         yay.play();
         checkAnswers();
         clearInterval(timer);
-        $(`#finish`).attr(`disabled`, true);
-        // var attr = $(this).attr('name');
-        // console.log(attr);
-        // var radioValue = $(`input[name='${attr}']:checked`).val();
-        // console.log(radioValue);
+        displayScore();
+        $(`#finish`).attr(`disabled`, true); 
     });
-});
-
-
-//questions and answers are generated
-//assigning right/wrong answers
-//timer based game
-//tally up all right answers + wrong answers at the end of timer and display it to player
-
-
-
-    // if ((answerNotChecked.length % 4) == 1) {
-    //     console.log(answerNotChecked);        
-    // }
-    // console.log(answerNotChecked.length % 4);
-
-    // console.log(answerCheck);
-    // for (let i = 0; i < answerCheck.length; i++) {
-    //     var currentValue = answerCheck[i].value;
-    //     console.log(currentValue);
-    //     if (currentValue === questions[i].correctAnswer) {
-    //         rightAnswers++;
-    //         }
-        // else if (currentValue != questions[i].correctAnswer) {
-        //     wrongAnswers+=1;
-        // }
-        // else {
-        //     wrongAnswers+=1;
-        // }
- 
-    // }
     
+});
